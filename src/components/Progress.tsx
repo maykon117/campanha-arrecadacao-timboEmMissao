@@ -1,0 +1,1 @@
+export default function Progress({value}:{value:number}){return <div className="h-3 overflow-hidden rounded-full bg-gray-200"><div className={`h-full rounded-full transition-all ${value>=100?'bg-emerald-500':'bg-slate-900'}`} style={{width:`${Math.min(value,100)}%`}}/></div>}
