@@ -1,4 +1,4 @@
-import type { AppData } from '../types';
+import type { AppData, PackageContentUnit } from '../types';
 import { supabase } from '../lib/supabase';
 
 export async function loadData(): Promise<AppData> {
@@ -31,6 +31,9 @@ export async function loadData(): Promise<AppData> {
       campanhaId: f.campaign_id,
       nome: f.name,
       unidade: f.unit,
+      conteudoQuantidade: Number(f.package_content_quantity ?? f.weight_per_unit_grams),
+      unidadeConteudo: (f.package_content_unit ?? 'g') as PackageContentUnit,
+      densidadeGramasPorMl: f.density_g_per_ml == null ? null : Number(f.density_g_per_ml),
       pesoPorUnidadeGramas: Number(f.weight_per_unit_grams),
       metaQuantidade: Number(f.target_quantity),
     })),
@@ -74,6 +77,9 @@ export async function saveData(data: AppData) {
         campaign_id: f.campanhaId,
         name: f.nome,
         unit: f.unidade,
+        package_content_quantity: f.conteudoQuantidade,
+        package_content_unit: f.unidadeConteudo,
+        density_g_per_ml: f.densidadeGramasPorMl,
         weight_per_unit_grams: f.pesoPorUnidadeGramas,
         target_quantity: f.metaQuantidade,
       }))
